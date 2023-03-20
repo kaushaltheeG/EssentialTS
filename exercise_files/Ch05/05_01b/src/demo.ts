@@ -10,11 +10,14 @@ const currentUser = {
     }
 }
 
+
+@log 
 class ContactRepository {
     private contacts: Contact[] = [];
 
+    @authorize("ContactViewer")
     getContactById(id: number): Contact | null {
-        console.trace(`ContactRepository.getContactById: BEGIN`);
+        // console.trace(`ContactRepository.getContactById: BEGIN`);
 
         if (!currentUser.isInRole("ContactViewer")) {
             throw Error("User not authorized to execute this action");
@@ -22,13 +25,14 @@ class ContactRepository {
 
         const contact = this.contacts.find(x => x.id === id);
 
-        console.debug(`ContactRepository.getContactById: END`);
+        // console.debug(`ContactRepository.getContactById: END`);
 
         return contact;
     }
 
+    @authorize("ContactEditor")
     save(contact: Contact): void {
-        console.trace(`ContactRepository.save: BEGIN`);
+        // console.trace(`ContactRepository.save: BEGIN`);
 
         if (!currentUser.isInRole("ContactEditor")) {
             throw Error("User not authorized to execute this action");
@@ -42,6 +46,6 @@ class ContactRepository {
             this.contacts.push(contact);
         }
 
-        console.debug(`ContactRepository.save: END`);
+        // console.debug(`ContactRepository.save: END`);
     }
 }
