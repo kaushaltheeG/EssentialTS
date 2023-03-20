@@ -2,6 +2,7 @@ var container = document.getElementById('container');
 
 let s: number 
 let y: string 
+let a: any[];
 
 function countdown(initial, final, interval) {
 
