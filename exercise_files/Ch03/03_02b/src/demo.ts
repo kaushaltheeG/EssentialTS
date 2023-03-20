@@ -14,3 +14,12 @@ let primaryContact: Contact = {
     name: "Jamie Johnson",
     status: "active"
 }
+
+//matches the keys of Contact type 
+type ContactFields = keyof Contact
+
+function getValue<T, U extends keyof T>(source: T, propertyName: U) {
+    return source[propertyName]; 
+}
+
+const value = getValue(primaryContact, "status")

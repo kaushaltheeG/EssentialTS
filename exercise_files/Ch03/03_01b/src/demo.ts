@@ -1,16 +1,23 @@
 type ContactName = string;
 
+//with enum 
 enum ContactStatus {
     Active = "active",
     Inactive = "inactive",
     New = "new"
 }
 
+//avoid enum 
+type ContactStatus2 =  "active" | "inactive" | "new"
+
+type ContactBirthDate = Date | number | string
+
 interface Contact {
     id: number;
     name: ContactName;
-    birthDate?: Date;
+    birthDate?: ContactBirthDate;
     status?: ContactStatus;
+    status2?: ContactStatus2; 
 }
 
 interface Address {
@@ -20,6 +27,11 @@ interface Address {
     region: string;
     postalCode: string;
 }
+
+//version 1
+interface AddressableContact extends Contact, Address{}
+//version 2 
+type AddressableContact2 = Contact & Address
 
 function getBirthDate(contact: Contact) {
     if (typeof contact.birthDate === "number") {
@@ -35,5 +47,7 @@ function getBirthDate(contact: Contact) {
 
 let primaryContact: Contact = {
     id: 12345,
-    name: "Jamie Johnson"
+    name: 'kzk',
+    status: ContactStatus.Inactive,
+    status2: "inactive"
 }
