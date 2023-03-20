@@ -19,6 +19,7 @@ interface Contact {
     name: string;
     status: ContactStatus;
     address: Address;
+    email: String; 
 }
 
 interface Query {
@@ -26,7 +27,18 @@ interface Query {
     matches(val): boolean;
 }
 
-type ContactQuery = Record<keyof Contact, Query>
+type ContactQuery = Partial<Record<keyof Contact, Query>> //Partial makes it all keys optional 
+type ContactQuery2 = Omit<
+    Partial<
+        Record<keyof Contact, Query>
+    >, 'address' | "status"
+> //Omit excluded specified keys 
+type ContactQuery3 = Partial<
+    Pick<Record<keyof Contact, Query>, 
+    "id" | "name"
+    >
+>
+
 
 function searchContacts(contacts: Contact[], query: ContactQuery) {
     return contacts.filter(contact => {
